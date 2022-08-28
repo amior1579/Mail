@@ -1,3 +1,8 @@
+window.onpopstate = function(event) {
+  console.log(event.state.mailbox);
+  showSection(event.state.mailbox);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // Use buttons to toggle between views
@@ -9,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // By default, load the inbox
   load_mailbox('inbox');
 });
+
 
 function compose_email() {
 
@@ -22,10 +28,31 @@ function compose_email() {
   document.querySelector('#compose-body').value = '';
 }
 
+function load_sent(sent){
+  document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#compose-view').style.display = 'none';
+
+  document.querySelector('#emails-view').innerHTML = `<h3>${sent.charAt(0).toUpperCase() + sent.slice(1)}</h3>`;
+
+}
+
 function load_mailbox(mailbox) {
-  
+  fetch(`/emails/${mailbox}`)
+  .then(response => response.json())
+  .then(get =>{
+    get.forEach(emails => {
+      console.log(emails);
+      const emailss = emails
+      const li = document.createElement('li')
+      li.innerHTML = `<a>${emailss.body}</a>`
+      document.querySelector('#emails-view').appendChild(li)
+      //document.querySelector('#emails-view').innerHTML = `${emailss}`
+    });
+
+  })
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
+
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name

@@ -1,6 +1,10 @@
 {% extends "mail/layout.html" %}
 {% load static %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'mail/inbox.css' %}">
+{% endblock %}
+
 {% block body %}
     <h2>{{ request.user.email }}</h2>
 
@@ -12,7 +16,9 @@
     <hr>
 
     <div id="emails-view">
+        
     </div>
+    
 
     <div id="compose-view">
         <h3>New Email</h3>
