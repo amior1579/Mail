@@ -1,7 +1,7 @@
-window.onpopstate = function(event) {
-  console.log(event.state.mailbox);
-  showSection(event.state.mailbox);
-}
+// window.onpopstate = function(event) {
+//   console.log(event.state.mailbox);
+//   showSection(event.state.mailbox);
+// }
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -54,25 +54,38 @@ function load_mailbox(mailbox) {
       console.log(emails);
       const emailss = emails
       const li = document.createElement('li')
-      li.innerHTML = `<div id='emailss'>
+      li.innerHTML = `<div class='div-email'>
+                        <p class='id'>${emailss.id}</p> 
                         <p class='sender'>${emailss.sender}</p> 
                         <h3 class='subject'>${emailss.subject}</h3>
+                        <p class='sender'>${emailss.body}</p> 
                         <p class='timestamp'>${emailss.timestamp}</p>
                       </div>`
-      document.querySelector('#emails-view').appendChild(li)
+      document.querySelector('#emails-view').appendChild(li);
+      
+      // document.querySelector('#div-email').click =() => email(emailss.id);
+      document.querySelectorAll('.div-email').forEach( p=>{
+        p.onclick = (email_id)=>{
+          document.querySelector('#email-page').style.display = 'block';
+          document.querySelector('#emails-view').style.display = 'none';
+          console.log(email_id);
+          fetch(`/emails/${email_id}`)
+          .then(response => response.json())
+          .then(page =>{
+            const div = document.createElement('div')
+            document.querySelector('#email-page').appendChild(div)
+            div.innerHTML = `<p>${page.body}</p>`
+            console.log(page);
+          })
+        }
+      });
+
     });
-    document.querySelectorAll('#emailss').forEach( div=>{
-      div.onclick = ()=>{
-    
-      document.querySelector('#email-page').style.display = 'block';
-      document.querySelector('#emails-view').style.display = 'none';
-      console.log(div);
-      }
-    })
   })
-  
-  // Show the mailbox and hide other views
-  document.querySelector('#emails-view').style.display = 'block';
+    // document.querySelector('li').addEventListener('click', () => email(email_id));
+
+// Show the mailbox and hide other views
+document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#email-page').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
 
@@ -80,3 +93,18 @@ function load_mailbox(mailbox) {
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 }
 
+
+  // function email(email_id){
+  //   document.querySelector('#email-page').style.display = 'block';
+  //   document.querySelector('#emails-view').style.display = 'none';
+  //   console.log(email_id);
+  //   fetch(`/emails/${email_id}`)
+  //   .then(response => response.json())
+  //   .then(page =>{
+  //     const div = document.createElement('div')
+  //     document.querySelector('#email-page').appendChild(div)
+  //     div.innerHTML = `<p>${page.body}</p>`
+  //     console.log(page);
+  //     // console.log(tagid);
+  //   })
+  // }
