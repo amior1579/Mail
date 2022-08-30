@@ -22,11 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(emails);
         const emailss = emails
         const li = document.createElement('li')
-        li.innerHTML = `<div id='div-email'>
+        li.innerHTML = `<div id='div_email'>
                           <p class='id'>${emailss.id}</p> 
                           <p class='sender'>${emailss.sender}</p> 
                           <p class='subject'>${emailss.subject}</p>
-                          <p class='sender'>${emailss.body}</p> 
                           <p class='timestamp'>${emailss.timestamp}</p>
                         </div>`
         document.querySelector('#emails-view').appendChild(li);
@@ -76,8 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(page =>{
         const div = document.createElement('div')
         document.querySelector('#email-page').appendChild(div)
-        div.innerHTML = ` <p>${page.body}</p>
-                          <p>${page.sender}</p>
+        div.innerHTML = ` <div class='div_single_email'>
+                            <p class='singlepage_sender'><span>sender:</span> ${page.sender}</p>
+                            <p class='singlepage_recipients'><span>recipients:</span> ${page.recipients}</p>
+                            <p class='singlepage_subject'><span>subject:</span> ${page.subject}</p>
+                            <p class='singlepage_body'><span>body:</span> ${page.body}</p>
+                            <p class='singlepage_timestamp'>${page.timestamp}</p>
+                          </div>
                         `
         console.log(page);
         
