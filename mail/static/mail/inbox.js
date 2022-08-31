@@ -25,14 +25,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const Aclass = document.createAttribute('class')
         Aclass.value = `${emailss.id}`
         li.setAttributeNode(Aclass)
-        li.innerHTML =` <div id='div_email'>
-                          <p class='id'>${emailss.id}</p> 
-                          <p class='sender'>${emailss.sender}</p> 
-                          <p class='subject'>${emailss.subject}</p>
-                          <p class='timestamp'>${emailss.timestamp}</p>
-                          <button class='${emailss.id}'>Archive</button>
-                        </div>
-                      `
+        if(`${mailbox}` === 'inbox' ){
+          li.innerHTML =` <div id='div_email'>
+                            <p class='id'>${emailss.id}</p> 
+                            <p class='sender'>${emailss.sender}</p> 
+                            <p class='subject'>${emailss.subject}</p>
+                            <p class='timestamp'>${emailss.timestamp}</p>
+                            <button class='${emailss.id}'>Archive</button>
+                          </div>
+                        `
+        }else if (`${mailbox}` === 'sent' ) {
+          li.innerHTML =` <div id='div_email'>
+                            <p class='id'>${emailss.id}</p> 
+                            <p class='sender'>${emailss.sender}</p> 
+                            <p class='subject'>${emailss.subject}</p>
+                            <p class='timestamp'>${emailss.timestamp}</p>
+                          </div>
+                        `
+        }else{
+                    li.innerHTML =` <div id='div_email'>
+                            <p class='id'>${emailss.id}</p> 
+                            <p class='sender'>${emailss.sender}</p> 
+                            <p class='subject'>${emailss.subject}</p>
+                            <p class='timestamp'>${emailss.timestamp}</p>
+                            <button class='${emailss.id}'>Undo</button>
+                          </div>
+                        `
+        }      
         document.querySelector('#emails-view').appendChild(li)
         console.log(emailss.read)
         
