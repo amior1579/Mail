@@ -22,39 +22,29 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(emails);
         const emailss = emails
         const li = document.createElement('li')
+        const Aclass = document.createAttribute('class')
+        Aclass.value = `${emailss.id}`
+        li.setAttributeNode(Aclass)
         li.innerHTML = `<div id='div_email'>
                           <p class='id'>${emailss.id}</p> 
                           <p class='sender'>${emailss.sender}</p> 
                           <p class='subject'>${emailss.subject}</p>
                           <p class='timestamp'>${emailss.timestamp}</p>
                         </div>`
-        document.querySelector('#emails-view').appendChild(li);
+        document.querySelector('#emails-view').appendChild(li)
+        console.log(emailss.read)
         
-      });
-        // document.querySelector('#div-email').click =() => email(emailss.id);
-        
-
-      
-      
-
-      // document.querySelectorAll('#div-email').forEach( click=>{
-      //   click.onclick = (li)=>{
-      //     console.log(li);
-      //     fetch(`/emails/${id}`)
-      //     .then(response => response.json())
-      //     .then(page =>{
-      //       const div = document.createElement('div')
-      //       document.querySelector('#email-page').appendChild(div)
-      //       div.innerHTML = `<p>${page.body}</p>`
-      //       console.log(page);
-
-      //     })
-      //     document.querySelector('#email-page').style.display = 'block';
-      //     document.querySelector('#emails-view').style.display = 'none';
-      //   }
-      // });
+        if(`${mailbox}` === 'inbox'){
+          if (emailss.read === true){
+            const element = document.getElementsByClassName(`${emailss.id}`)
+            const li = element[0]
+            console.log(li);
+            li.style.backgroundColor = '#cccccc'
+            console.log(emailss.read === true)
+          }
+        };
+      }) 
     })
-      // document.querySelector('li').addEventListener('click', () => email(email_id));
   
   // Show the mailbox and hide other views
     document.querySelector('#emails-view').style.display = 'block';
@@ -83,8 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class='singlepage_timestamp'>${page.timestamp}</p>
                           </div>
                         `
-        console.log(page);
-        
+        fetch(`/emails/${page.id}`,{
+          method:'PUT',
+          body: JSON.stringify({
+            read: true,
+          })
+        })
       })
       document.querySelector('#email-page').style.display = 'block';
       document.querySelector('#emails-view').style.display = 'none';
@@ -92,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
     }
   })
-
+  
   function compose_email() {
     document.querySelector('#compose-form').onsubmit = ()=>{
         fetch('/emails',{
@@ -122,22 +116,3 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#compose-body').value = '';
 }
 });
-
-
-
-
-
-  // function email(email_id){
-  //   document.querySelector('#email-page').style.display = 'block';
-  //   document.querySelector('#emails-view').style.display = 'none';
-  //   console.log(email_id);
-  //   fetch(`/emails/${email_id}`)
-  //   .then(response => response.json())
-  //   .then(page =>{
-  //     const div = document.createElement('div')
-  //     document.querySelector('#email-page').appendChild(div)
-  //     div.innerHTML = `<p>${page.body}</p>`
-  //     console.log(page);
-  //     // console.log(tagid);
-  //   })
-  // }
