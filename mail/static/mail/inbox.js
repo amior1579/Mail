@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class='sender'>${emailss.sender}</p> 
                             <p class='subject'>${emailss.subject}</p>
                             <p class='timestamp'>${emailss.timestamp}</p>
+                            </div>
                             <button class='${emailss.id}'>Archive</button>
-                          </div>
                         `
         }else if (`${mailbox}` === 'sent' ) {
           li.innerHTML =` <div id='div_email'>
@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class='sender'>${emailss.sender}</p> 
                             <p class='subject'>${emailss.subject}</p>
                             <p class='timestamp'>${emailss.timestamp}</p>
+                            </div>
                             <button class='${emailss.id}'>Undo</button>
-                          </div>
                         `
         }      
         document.querySelector('#emails-view').appendChild(li)
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('click', event=>{
           const archive = event.target
           console.log(archive);
+          
           if(`${mailbox}` === 'inbox'){
             if(archive.className === `${emailss.id}`){
               fetch(`/emails/${emailss.id}`,{
@@ -76,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   archived: true,
                 })
               })
+              archive.parentElement.style.display = 'none'
             }
           }else{
             if(archive.className === `${emailss.id}`){
@@ -85,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   archived: false,
                 })
               })
+              archive.parentElement.style.display = 'none'
             }
           }
         })
