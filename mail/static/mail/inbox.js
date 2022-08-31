@@ -25,12 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const Aclass = document.createAttribute('class')
         Aclass.value = `${emailss.id}`
         li.setAttributeNode(Aclass)
-        li.innerHTML = `<div id='div_email'>
+        li.innerHTML =` <div id='div_email'>
                           <p class='id'>${emailss.id}</p> 
                           <p class='sender'>${emailss.sender}</p> 
                           <p class='subject'>${emailss.subject}</p>
                           <p class='timestamp'>${emailss.timestamp}</p>
-                        </div>`
+                          <button class='${emailss.id}'>Archive</button>
+                        </div>
+                      `
         document.querySelector('#emails-view').appendChild(li)
         console.log(emailss.read)
         
@@ -43,6 +45,31 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(emailss.read === true)
           }
         };
+
+        document.addEventListener('click', event=>{
+          const archive = event.target
+          console.log(archive);
+          if(`${mailbox}` === 'inbox'){
+            if(archive.className === `${emailss.id}`){
+              fetch(`/emails/${emailss.id}`,{
+                method:'PUT',
+                body: JSON.stringify({
+                  archived: true,
+                })
+              })
+            }
+          }else{
+            if(archive.className === `${emailss.id}`){
+              fetch(`/emails/${emailss.id}`,{
+                method:'PUT',
+                body: JSON.stringify({
+                  archived: false,
+                })
+              })
+            }
+          }
+        })
+
       }) 
     })
   
@@ -54,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the mailbox name
     document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
   }
+
+
 
 
   document.addEventListener('click', event =>{
@@ -86,6 +115,8 @@ document.addEventListener('DOMContentLoaded', function() {
       
     }
   })
+
+
   
   function compose_email() {
     document.querySelector('#compose-form').onsubmit = ()=>{
