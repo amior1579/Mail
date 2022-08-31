@@ -96,9 +96,9 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   
   // Show the mailbox and hide other views
+    document.querySelector('#compose-view').style.display = 'none';
     document.querySelector('#emails-view').style.display = 'block';
     document.querySelector('#email-page').style.display = 'none';
-    document.querySelector('#compose-view').style.display = 'none';
   
     // Show the mailbox name
     document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class='singlepage_subject'><span>subject:</span> ${page.subject}</p>
                             <p class='singlepage_body'><span>body:</span> ${page.body}</p>
                             <p class='singlepage_timestamp'>${page.timestamp}</p>
+                            <button class='replay_button'>Replay</button>
                           </div>
                         `
         fetch(`/emails/${page.id}`,{
@@ -130,10 +131,52 @@ document.addEventListener('DOMContentLoaded', function() {
             read: true,
           })
         })
+
+        document.addEventListener('click', event=> {
+          const replay = event.target
+          if(replay.className === 'replay_button'){
+            console.log(replay);
+            document.querySelector('#compose-form').onsubmit = ()=>{
+              fetch('/emails',{
+                method:'POST',
+                body: JSON.stringify ({
+                  recipients: document.querySelector('#compose-recipients').value = `${page.sender}`,
+                  sender: document.querySelector('#compose-recipients').value = `${page.recipients}`,
+                  subject: document.querySelector('#compose-subject').value,
+                  body: document.querySelector('#compose-body').value,
+                })
+              })
+            return false
+            }
+
+            document.querySelector('#compose-sender').value = `${page.recipients}`
+
+            document.querySelector('#compose-recipients').value = `${page.sender}`
+            const disabled = document.createAttribute('disabled')
+            document.querySelector('#compose-recipients').setAttributeNode(disabled)
+
+            document.querySelector('#compose-subject').value = `Re: ${page.subject}`
+            const subject = document.createAttribute('disabled')
+            document.querySelector('#compose-subject').setAttributeNode(subject)
+            
+            const date = new Date();
+            const senddate = date.toGMTString()
+            document.querySelector('#compose-body').value = `«On ${senddate} ${page.sender} wrote:», `
+
+
+
+            document.querySelector('#emails-view').style.display = 'none';
+            document.querySelector('#email-page').style.display = 'none';
+            document.querySelector('#compose-view').style.display = 'block';
+          }
+
+        })
       })
+
       document.querySelector('#email-page').style.display = 'block';
       document.querySelector('#emails-view').style.display = 'none';
-      document.querySelector('#email-page').innerHTML = ''
+      document.querySelector('#email-page').innerHTML = '';
+      document.querySelector('#compose-view').style.display = 'none';
       
     }
   })
@@ -162,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#email-page').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
+  
   
   // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
