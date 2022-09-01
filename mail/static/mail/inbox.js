@@ -184,6 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   function compose_email() {
+    document.querySelector('#success_message').innerHTML = ''
+    document.querySelector('#error_message').innerHTML = ''
     document.querySelector('#compose-form').onsubmit = ()=>{
         fetch('/emails',{
           method:'POST',
@@ -197,8 +199,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(sent =>{
           console.log(sent);
           if(typeof sent.message != 'undefined'){
-            document.querySelector('#message_message').innerHTML = sent.message
+            document.querySelector('#success_message').innerHTML = sent.message
+            document.querySelector('#error_message').innerHTML = ''
+            
           }if(typeof sent.error != 'undefined'){
+            document.querySelector('#success_message').innerHTML = ''
             document.querySelector('#error_message').innerHTML = sent.error
           } 
            
