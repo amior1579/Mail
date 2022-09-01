@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.addEventListener('click', event=>{
           const archive = event.target
-          console.log(archive);
+          // console.log(archive);
           
           if(`${mailbox}` === 'inbox'){
             if(archive.className === `${emailss.id}`){
@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         })
 
+        // replay email
         document.addEventListener('click', event=> {
           const replay = event.target
           if(replay.className === 'replay_button'){
@@ -146,7 +147,21 @@ document.addEventListener('DOMContentLoaded', function() {
                   body: document.querySelector('#compose-body').value,
                 })
               })
-            return false
+              .then(response => response.json())
+              .then(sent =>{
+              console.log(sent);
+                if(typeof sent.message != 'undefined'){
+                  document.querySelector('#error_message').innerHTML = ''
+                  document.querySelector('#success_message').innerHTML = sent.message
+                  setTimeout(load_mailbox,2000,'sent')
+
+                }if(typeof sent.error != 'undefined'){
+                  document.querySelector('#success_message').innerHTML = ''
+                  document.querySelector('#error_message').innerHTML = sent.error
+                }
+                })
+          
+              return false
             }
 
             document.querySelector('#compose-sender').value = `${page.recipients}`
@@ -169,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#email-page').style.display = 'none';
             document.querySelector('#compose-view').style.display = 'block';
           }
-
         })
+
       })
 
       document.querySelector('#email-page').style.display = 'block';
