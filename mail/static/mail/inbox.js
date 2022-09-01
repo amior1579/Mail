@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
                           </div>
                         `
         document.getElementById('replay_button').addEventListener('click', ()=> replay_email(detail));
+        read_email(detail)
         })
       document.querySelector('#email-page').innerHTML = ''
       }
@@ -198,6 +199,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     }
 
+
+  function read_email(detail){
+    fetch(`/emails/${detail.id}`,{
+      method:'PUT',
+      body: JSON.stringify({
+        read: true,
+      })
+    })
+  }
 
 
   function compose_email() {
