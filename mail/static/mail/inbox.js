@@ -201,6 +201,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function compose_email() {
     document.querySelector('#success_message').innerHTML = ''
     document.querySelector('#error_message').innerHTML = ''
+    
+    document.querySelector('#compose-recipients').removeAttribute('disabled')
+    document.querySelector('#compose-subject').removeAttribute('disabled')
+    document.querySelector('#compose-recipients').value = ''
+    document.querySelector('#compose-subject').value = ''
+    
     document.querySelector('#compose-form').onsubmit = ()=>{
         fetch('/emails',{
           method:'POST',
