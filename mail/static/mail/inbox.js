@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#emails-view').appendChild(li)
         console.log(emailss.read)
         
-        if(`${mailbox}` === 'inbox' || 'archive'){
+        if(`${mailbox}` === 'inbox' || `${mailbox}` === 'archive'){
           if (emailss.read === true){
             const element = document.getElementsByClassName(`${emailss.id}`)
             const li = element[0]
