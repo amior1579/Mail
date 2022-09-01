@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
   // })
 
-
+  // email single page
   function view_email(emailss_id){
     document.querySelector('#compose-view').style.display = 'none';
     document.querySelector('#emails-view').style.display = 'none';
@@ -203,14 +203,59 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class='singlepage_subject'><span>subject:</span> ${detail.subject}</p>
                             <p class='singlepage_body'><span>body:</span> ${detail.body}</p>
                             <p class='singlepage_timestamp'>${detail.timestamp}</p>
-                            <button class='replay_button'>Replay</button>
+                            <button id='replay_button'>Replay</button>
                           </div>
                         `
+        document.getElementById('replay_button').addEventListener('click', ()=> replay_email(detail));
         })
       document.querySelector('#email-page').innerHTML = ''
       }
-  
-  
+
+
+  // replay
+  function replay_email(detail){
+    console.log(detail);
+    document.querySelector('#compose-view').style.display = 'block';
+    document.querySelector('#emails-view').style.display = 'none';
+    document.querySelector('#email-page').style.display = 'none';
+
+    document.querySelector('#compose-recipients').value = `${detail.sender}`
+    document.querySelector('#compose-subject').value = `${detail.subject}`
+    document.querySelector('#compose-body').value = ''
+
+    const disabled_recipients = document.createAttribute('disabled')
+    document.querySelector('#compose-recipients').setAttributeNode(disabled_recipients)
+    const disabled_sunbject = document.createAttribute('disabled')
+    document.querySelector('#compose-subject').setAttributeNode(disabled_sunbject)
+    
+    const date = new Date();
+    const setddate = date.toGMTString()
+    document.querySelector('#compose-body').value = `«On ${setddate} ${detail.sender} wrote:», `
+
+    document.querySelector('#compose-form').onsubmit = ()=>{
+      fetch('/emails',{
+        method:'POST',
+        body: JSON.stringify ({
+                recipients: document.querySelector('#compose-sender').value = `${detail.recipients}`,
+                sender: document.querySelector('#compose-recipients').value = `${detail.sender}`,
+                subject: (document.querySelector('#compose-subject').value = `${detail.subject}`),
+                body: document.querySelector('#compose-body').value,
+        })
+        
+      })
+      .then(response => response.json())
+      .then(message =>{
+        console.log(message);
+      document.querySelector('#error_message').innerHTML = ''
+      document.querySelector('#success_message').innerHTML = message.message
+      setTimeout(load_mailbox,2000,'sent')
+      })
+    }
+      return false;
+    }
+
+
+
   function compose_email() {
     document.querySelector('#success_message').innerHTML = ''
     document.querySelector('#error_message').innerHTML = ''
