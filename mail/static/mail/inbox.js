@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#emails-view').appendChild(li)
         console.log(emailss.read)
         
-        if(`${mailbox}` === 'inbox'){
+        if(`${mailbox}` === 'inbox' || 'archive'){
           if (emailss.read === true){
             const element = document.getElementsByClassName(`${emailss.id}`)
             const li = element[0]
@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         };
 
+        // Archive
         document.addEventListener('click', event=>{
           const archive = event.target
           // console.log(archive);
-          
           if(`${mailbox}` === 'inbox'){
             if(archive.className === `${emailss.id}`){
               fetch(`/emails/${emailss.id}`,{
@@ -91,6 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }
         })
+
+
 
       }) 
     })
