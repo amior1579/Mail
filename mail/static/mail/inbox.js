@@ -121,62 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
   //         })
   //       })
 
-  //       // replay email
-  //       document.addEventListener('click', event=> {
-  //         const replay = event.target
-  //         if(replay.className === 'replay_button'){
-  //           console.log(replay);
-  //           document.querySelector('#compose-form').onsubmit = ()=>{
-  //             fetch('/emails',{
-  //               method:'POST',
-  //               body: JSON.stringify ({
-  //                 recipients: document.querySelector('#compose-recipients').value = `${page.sender}`,
-  //                 sender: document.querySelector('#compose-recipients').value = `${page.recipients}`,
-  //                 subject: document.querySelector('#compose-subject').value,
-  //                 body: document.querySelector('#compose-body').value,
-  //               })
-  //             })
-  //             .then(response => response.json())
-  //             .then(sent =>{
-  //             console.log(sent);
-  //               if(typeof sent.message != 'undefined'){
-  //                 document.querySelector('#error_message').innerHTML = ''
-  //                 document.querySelector('#success_message').innerHTML = sent.message
-  //                 setTimeout(load_mailbox,2000,'sent')
-
-  //               }if(typeof sent.error != 'undefined'){
-  //                 document.querySelector('#success_message').innerHTML = ''
-  //                 document.querySelector('#error_message').innerHTML = sent.error
-  //               }
-  //               })
-          
-  //             return false
-  //           }
-
-  //           document.querySelector('#compose-sender').value = `${page.recipients}`
-
-  //           document.querySelector('#compose-recipients').value = `${page.sender}`
-  //           const disabled = document.createAttribute('disabled')
-  //           document.querySelector('#compose-recipients').setAttributeNode(disabled)
-
-  //           document.querySelector('#compose-subject').value = `Re: ${page.subject}`
-  //           const subject = document.createAttribute('disabled')
-  //           document.querySelector('#compose-subject').setAttributeNode(subject)
-            
-  //           const date = new Date();
-  //           const senddate = date.toGMTString()
-  //           document.querySelector('#compose-body').value = `«On ${senddate} ${page.sender} wrote:», `
-
-
-
-  //           document.querySelector('#emails-view').style.display = 'none';
-  //           document.querySelector('#email-page').style.display = 'none';
-  //           document.querySelector('#compose-view').style.display = 'block';
-  //         }
-  //       })
-
-  //     })
-
   //     document.querySelector('#email-page').style.display = 'block';
   //     document.querySelector('#emails-view').style.display = 'none';
   //     document.querySelector('#email-page').innerHTML = '';
@@ -236,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
       fetch('/emails',{
         method:'POST',
         body: JSON.stringify ({
-                recipients: document.querySelector('#compose-sender').value = `${detail.recipients}`,
-                sender: document.querySelector('#compose-recipients').value = `${detail.sender}`,
+                sender: (document.querySelector('#compose-sender').value = `${detail.recipients}`),
+                recipients: (document.querySelector('#compose-recipients').value = `${detail.sender}`),
                 subject: (document.querySelector('#compose-subject').value = `${detail.subject}`),
                 body: document.querySelector('#compose-body').value,
         })
@@ -250,8 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('#success_message').innerHTML = message.message
       setTimeout(load_mailbox,2000,'sent')
       })
-    }
       return false;
+    }
     }
 
 
