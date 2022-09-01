@@ -199,9 +199,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(sent =>{
           console.log(sent);
           if(typeof sent.message != 'undefined'){
-            document.querySelector('#success_message').innerHTML = sent.message
             document.querySelector('#error_message').innerHTML = ''
-            load_mailbox('sent')
+            document.querySelector('#success_message').innerHTML = sent.message
+            setTimeout(load_mailbox,2000,'sent')
+
           }if(typeof sent.error != 'undefined'){
             document.querySelector('#success_message').innerHTML = ''
             document.querySelector('#error_message').innerHTML = sent.error
