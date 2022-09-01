@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class='sender'>${emailss.sender}</p> 
                             <p class='subject'>${emailss.subject}</p>
                             <p class='timestamp'>${emailss.timestamp}</p>
-                            <button class='${emailss.id}'>Archive</button>
+                            <button class=${mailbox}>Archive</button>
                             </div>
                         `
         }else if (`${mailbox}` === 'sent' ) {
@@ -48,16 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class='sender'>${emailss.sender}</p> 
                             <p class='subject'>${emailss.subject}</p>
                             <p class='timestamp'>${emailss.timestamp}</p>
+                            <button class=${mailbox}>Undo</button>
                             </div>
-                            <button class='${emailss.id}'>Undo</button>
                         `
         }      
         document.querySelector('#emails-view').appendChild(li)
         console.log(emailss.read)
         
+        // click to show email single page
         li.addEventListener('click', ()=> view_email(emailss.id))
-        localStorage.clear()
 
+        // read email style
         if(`${mailbox}` === 'inbox' || `${mailbox}` === 'archive'){
           if (emailss.read === true){
             const element = document.getElementsByClassName(`${emailss.id}`)
@@ -68,32 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         };
 
-        // Archive
-        document.addEventListener('click', event=>{
-          const archive = event.target
-          // console.log(archive);
-          if(`${mailbox}` === 'inbox'){
-            if(archive.className === `${emailss.id}`){
-              fetch(`/emails/${emailss.id}`,{
-                method:'PUT',
-                body: JSON.stringify({
-                  archived: true,
-                })
-              })
-              archive.parentElement.style.display = 'none'
-            }
-          }else{
-            if(archive.className === `${emailss.id}`){
-              fetch(`/emails/${emailss.id}`,{
-                method:'PUT',
-                body: JSON.stringify({
-                  archived: false,
-                })
-              })
-              archive.parentElement.style.display = 'none'
-            }
-          }
-        })
+        // click email archive
+        // const archive_button = document.getElementsByClassName(`${mailbox}`)
+        // console.log(archive_button);
+        // // archive_button.addEventListener('click', ()=> archive(emailss_id,mailbox))
       }) 
 
     })
@@ -107,27 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
   }
 
-
-
-  // click to single page
-  // document.getElementById('div_inbox').addEventListener('click', emails=>{
-  //   console.log(emails);
-
- 
-  //       fetch(`/emails/${page.id}`,{
-  //         method:'PUT',
-  //         body: JSON.stringify({
-  //           read: true,
-  //         })
-  //       })
-
-  //     document.querySelector('#email-page').style.display = 'block';
-  //     document.querySelector('#emails-view').style.display = 'none';
-  //     document.querySelector('#email-page').innerHTML = '';
-  //     document.querySelector('#compose-view').style.display = 'none';
-      
-    
-  // })
 
   // email single page
   function view_email(emailss_id){
@@ -157,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
 
-  // replay
+  // replay email
   function replay_email(detail){
     console.log(detail);
     document.querySelector('#compose-view').style.display = 'block';
@@ -199,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     }
 
-
+// read email
   function read_email(detail){
     fetch(`/emails/${detail.id}`,{
       method:'PUT',
@@ -209,7 +167,34 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   }
 
+function archive(emailss_id,element,mailbox){
+  // const button = element.target
+  console.log(button);
+    if(`${mailbox}` === 'inbox'){
+      if(button.className === 'inbox'){
+            fetch(`/emails/${emailss_id}`,{
+              method:'PUT',
+              body: JSON.stringify({
+                archived: true,
+              })
+            })
+            button.parentElement.style.display = 'none'
+          }
+    }else{
+          if(button.className === 'archive'){
+            fetch(`/emails/${emailss_id}`,{
+              method:'PUT',
+              body: JSON.stringify({
+                archived: false,
+              })
+            })
+            button.parentElement.style.display = 'none'
+          }
+    }
 
+}
+
+// send email
   function compose_email() {
     document.querySelector('#success_message').innerHTML = ''
     document.querySelector('#error_message').innerHTML = ''
