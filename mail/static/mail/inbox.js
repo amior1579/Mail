@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if(typeof sent.message != 'undefined'){
             document.querySelector('#success_message').innerHTML = sent.message
             document.querySelector('#error_message').innerHTML = ''
-            
+            load_mailbox('sent')
           }if(typeof sent.error != 'undefined'){
             document.querySelector('#success_message').innerHTML = ''
             document.querySelector('#error_message').innerHTML = sent.error
