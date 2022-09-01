@@ -196,7 +196,17 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(sent =>{
           console.log(sent);
+          if(typeof sent.message != 'undefined'){
+            document.querySelector('#message_message').innerHTML = sent.message
+          }if(typeof sent.error != 'undefined'){
+            document.querySelector('#error_message').innerHTML = sent.error
+          } 
+           
         })
+        // Clear out composition fields
+        document.querySelector('#compose-recipients').value = '';
+        document.querySelector('#compose-subject').value = '';
+        document.querySelector('#compose-body').value = '';
     return false
     }
     
@@ -207,9 +217,5 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#compose-view').style.display = 'block';
   
   
-  // Clear out composition fields
-  document.querySelector('#compose-recipients').value = '';
-  document.querySelector('#compose-subject').value = '';
-  document.querySelector('#compose-body').value = '';
 }
 });

@@ -26,6 +26,8 @@
 
     <div id="compose-view" action="#">
         <h3>New Email</h3>
+        <p id="success_message"></p>
+        <p id="error_message"></p>
         <form id="compose-form">
             <div class="form-group">
                 From: <input disabled class="form-control" id="compose-sender" value="{{ request.user.email }}">
