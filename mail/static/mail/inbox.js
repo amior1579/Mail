@@ -21,42 +21,44 @@ document.addEventListener('DOMContentLoaded', function() {
       get.forEach(emails => {
         console.log(emails);
         const emailss = emails
+        const div = document.createElement('div')
         const li = document.createElement('li')
         const Aclass = document.createAttribute('class')
         Aclass.value = `${emailss.id}`
-        li.setAttributeNode(Aclass)
+        div.setAttributeNode(Aclass)
         if(`${mailbox}` === 'inbox' ){
-          li.innerHTML =` <div id='div_inbox'>
+          div.innerHTML =` <div id='div_inbox'>
                             <p class='id'>${emailss.id}</p> 
                             <p class='sender'>${emailss.sender}</p> 
                             <p class='subject'>${emailss.subject}</p>
                             <p class='timestamp'>${emailss.timestamp}</p>
-                            <button class=${mailbox}>Archive</button>
+
                             </div>
                         `
         }else if (`${mailbox}` === 'sent' ) {
-          li.innerHTML =` <div id='div_email'>
+          div.innerHTML =` <div id='div_email'>
                             <p class='id'>${emailss.id}</p> 
                             <p class='sender'>${emailss.sender}</p> 
                             <p class='subject'>${emailss.subject}</p>
-                            <p class='timestamp'>${emailss.timestamp}</p>
+                            <p class=${mailbox}>${emailss.timestamp}</p>
                           </div>
                         `
         }else{
-                    li.innerHTML =` <div id='div_email'>
+                    div.innerHTML =` <div id='div_email'>
                             <p class='id'>${emailss.id}</p> 
                             <p class='sender'>${emailss.sender}</p> 
                             <p class='subject'>${emailss.subject}</p>
                             <p class='timestamp'>${emailss.timestamp}</p>
-                            <button class=${mailbox}>Undo</button>
+
                             </div>
                         `
         }      
+        li.appendChild(div)
         document.querySelector('#emails-view').appendChild(li)
         console.log(emailss.read)
         
         // click to show email single page
-        li.addEventListener('click', ()=> view_email(emailss.id))
+        div.addEventListener('click', ()=> view_email(emailss.id))
 
         // read email style
         if(`${mailbox}` === 'inbox' || `${mailbox}` === 'archive'){
@@ -69,10 +71,19 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         };
 
-        // click email archive
-        // const archive_button = document.getElementsByClassName(`${mailbox}`)
-        // console.log(archive_button);
-        // // archive_button.addEventListener('click', ()=> archive(emailss_id,mailbox))
+        // click email to archive
+        const archive_button = document.createElement('button')
+        archive_button.id = 'archive'
+        if(`${mailbox}` === 'inbox'){
+          archive_button.innerHTML = 'Archive'
+        }else if(`${mailbox}` === 'archive'){
+          archive_button.innerHTML = 'Undo'
+        }else{
+          archive_button.style.display = 'none'
+        }
+        li.appendChild(archive_button)
+        archive_button.addEventListener('click', ()=> archive_box(emailss.id,mailbox,li))
+
       }) 
 
     })
@@ -177,32 +188,30 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   }
 
-function archive(emailss_id,element,mailbox){
-  // const button = element.target
-  console.log(button);
-    if(`${mailbox}` === 'inbox'){
-      if(button.className === 'inbox'){
-            fetch(`/emails/${emailss_id}`,{
-              method:'PUT',
-              body: JSON.stringify({
-                archived: true,
-              })
-            })
-            button.parentElement.style.display = 'none'
-          }
-    }else{
-          if(button.className === 'archive'){
-            fetch(`/emails/${emailss_id}`,{
-              method:'PUT',
-              body: JSON.stringify({
-                archived: false,
-              })
-            })
-            button.parentElement.style.display = 'none'
-          }
-    }
+  
+  function archive_box(emailss_id,mailbox,li){
+    console.log(emailss_id);
+    li.style.display = 'none'
+      if(`${mailbox}` === 'inbox'){
+              fetch(`/emails/${emailss_id}`,{
+                method:'PUT',
+                body: JSON.stringify({
+                  archived: true,
+                })
 
-}
+              })
+      }else{
+
+              fetch(`/emails/${emailss_id}`,{
+                method:'PUT',
+                body: JSON.stringify({
+                  archived: false,
+                })
+
+            })
+      }
+
+  }
 
 // send email
   function compose_email() {
