@@ -121,11 +121,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#compose-view').style.display = 'block';
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#email-page').style.display = 'none';
-
   
     document.querySelector('#title_compose').innerHTML = 'Replay'
     document.querySelector('#compose-recipients').value = `${detail.sender}`
-    document.querySelector('#compose-subject').value = `${detail.subject}`
+
+    const sub = document.querySelector('#compose-subject')
+    sub.value = `${detail.subject}`
+    console.log(sub.value);
+    if(typeof sub.value != `Re: ${detail.subject}`){
+      const sub2 = sub.value.replace('Re: ','')
+      sub.value = sub2
+      console.log(sub2)
+    }
+
     document.querySelector('#compose-body').value = ''
 
     const disabled_recipients = document.createAttribute('disabled')
@@ -135,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const date = new Date();
     const setddate = date.toGMTString()
-    document.querySelector('#compose-body').value = `«On ${setddate} ${detail.sender} wrote:», `
+    document.querySelector('#compose-body').value = `«On ${setddate} ${detail.recipients} wrote:», `
 
     document.querySelector('#compose-form').onsubmit = ()=>{
       fetch('/emails',{
@@ -143,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
         body: JSON.stringify ({
                 sender: (document.querySelector('#compose-sender').value = `${detail.recipients}`),
                 recipients: (document.querySelector('#compose-recipients').value = `${detail.sender}`),
-                subject: (document.querySelector('#compose-subject').value = `${detail.subject}`),
+                subject: (document.querySelector('#compose-subject').value = `Re: ${sub.value}`),
                 body: document.querySelector('#compose-body').value,
         })
         
