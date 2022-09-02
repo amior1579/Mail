@@ -122,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#email-page').style.display = 'none';
 
+  
+    document.querySelector('#title_compose').innerHTML = 'Replay'
     document.querySelector('#compose-recipients').value = `${detail.sender}`
     document.querySelector('#compose-subject').value = `${detail.subject}`
     document.querySelector('#compose-body').value = ''
