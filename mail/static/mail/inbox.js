@@ -216,6 +216,8 @@ document.addEventListener('DOMContentLoaded', function() {
           if(typeof sent.message != 'undefined'){
             document.querySelector('#error_message').innerHTML = ''
             document.querySelector('#success_message').innerHTML = sent.message
+            document.querySelector('#success_message').style.border= 'solid 1px green'
+            document.querySelector('#success_message').style.padding= '5px 15px 5px 15px'
             setTimeout(load_mailbox,2000,'sent')
           }if(typeof sent.error != 'undefined'){
             document.querySelector('#success_message').innerHTML = ''
