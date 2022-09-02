@@ -95,35 +95,66 @@ li button{
 
 /*--------------------------- single page email -------------------------*/
 
+
 .div_single_email{
     border: solid 1px black;
     padding: 20px;
 }
 
 span{
+    display: block;
     font-weight: 700;
     font-size: 17px;
+    margin: -29px 0 0 0;
+    width: fit-content;
+    padding: 0 5px 0 5px;
+    background-color: rgb(255, 255, 255);
 }
 
-.singlepage_sender{
+.singlepage_sender {
     display: block;
+    border: solid 1px black;
+    padding: 15px;
 
 
 }
 .singlepage_recipients{
     display: block;
+    border: solid 1px black;
+    padding: 15px;
     
 }
 
 .singlepage_subject{
     display: block;
+    border: solid 1px black;
+    padding: 15px;
 }
 
 .singlepage_body{
     display: block;
+    border: solid 1px black;
+    padding: 15px;
+    height: 200px;
 }
 
 .singlepage_timestamp{
-
+float: right;
 }
+
+#replay_button{
+    border:  solid 1px #007BFF ;
+    color: #007BFF;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 15px 5px 15px;
+}
+
+#replay_button:hover{
+    border:  solid 1px #007BFF ;
+    color: #ffffff;
+    background-color: #007BFF;
+    
+}
+
 

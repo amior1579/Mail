@@ -94,10 +94,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const div = document.createElement('div')
         document.querySelector('#email-page').appendChild(div)
         div.innerHTML = `
-                          <p class='singlepage_sender'><span>sender:</span> ${detail.sender}</p>
-                          <p class='singlepage_recipients'><span>recipients:</span> ${detail.recipients}</p>
-                          <p class='singlepage_subject'><span>subject:</span> ${detail.subject}</p>
-                          <p class='singlepage_body'><span>body:</span> ${detail.body}</p>
+                          <p class='singlepage_sender'><span>sender</span> ${detail.sender}</p>
+                          <p class='singlepage_recipients'><span>recipients</span> ${detail.recipients}</p>
+                          <p class='singlepage_subject'><span>subject</span> ${detail.subject}</p>
+                          <p class='singlepage_body'><span>body</span> ${detail.body}</p>
                           <p class='singlepage_timestamp'>${detail.timestamp}</p>
                           <button id='replay_button'>Replay</button>
                         `
