@@ -18,14 +18,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const li = document.createElement('li')
         const div = document.createElement('div')
         const createAttribute = document.createAttribute('class')
-        createAttribute.value = `${emails.id}`
+        createAttribute.value = 'div_show_email'
         div.setAttributeNode(createAttribute)
-        div.innerHTML =`<div id='div_inbox'>
-                          <p class='id'>${emails.id}</p> 
+        div.innerHTML =`<div class='div_sender'>
                           <p class='sender'>${emails.sender}</p> 
+                        </div>
+                        <div class='div_subject'>
                           <p class='subject'>${emails.subject}</p>
+                        </div>
+                        <div class='div_timestamp'>    
                           <p class='timestamp'>${emails.timestamp}</p>
-                        </div>`          
+                        </div>
+                      `          
         li.appendChild(div)
         document.querySelector('#emails-view').appendChild(li)
         // console.log(emails.read)
@@ -57,8 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
           archive_button.style.display = 'none'
         }
         li.appendChild(archive_button)
-        archive_button.addEventListener('click', ()=> archive_box(emails.id,mailbox,li))
-
+        archive_button.addEventListener('click', ()=> {
+          li.style.animationPlayState = 'running';
+          li.addEventListener('animationend', () =>  {
+            archive_box(emails.id,mailbox,li)
+          })
+        })
 
       }) 
     })

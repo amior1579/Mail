@@ -6,12 +6,45 @@
 #div_email{
 }
 
+@keyframes archive{
+    0%{
+        opacity: 1;
+        display: block;
+        margin: 5px 0 0 0 ;
+        border: solid 1px rgba(44, 44, 44, 0.514);
+        padding: 15px;
+        border-radius: 5px;
+    }
+    75%{
+        opacity: 0;
+        display: block;
+        margin: 5px 0 0 0 ;
+        border: solid 1px rgba(44, 44, 44, 0.514);
+        padding: 15px;
+        border-radius: 5px;
+    }
+    100%{
+        opacity: 0;
+        display: block;
+        margin: 5px 0 0 0 ;
+        border: solid 1px rgba(44, 44, 44, 0.514);
+        padding: 0;
+        border-radius: 5px;
+
+    }
+
+}
+
 li{
     display: block;
     margin: 5px 0 0 0 ;
     border: solid 1px rgba(44, 44, 44, 0.514);
-    padding: 10px;
+    padding: 15px;
     border-radius: 5px;
+    animation-name: archive;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
 
 }
 li:hover{
@@ -19,29 +52,45 @@ li:hover{
     
 }
 
+.div_show_email{
+    display: inline-block;
 
-.sender{
-    display: inline;
+
+}
+
+
+
+.div_sender{
+    display: inline-block;
     font-size: 20px;
     font-weight: 700;
+    margin: 0 200px 0 0 ;
 }
 
-.subject{
-    display: inline;
+.div_subject{
+    display: inline-block;
     font-size: 15px;
-    padding: 0 0 0 250px;
+    width: 300px;
+
     
 }
 
-.timestamp{
+.div_timestamp{
+    display: inline-block;
+
+    font-size: 12px;
+
+    
+}
+
+li button{
     display: inline;
     float: right;
-    font-size: 12px;
-    margin: 6px 0 0 0;
-    
+    border: solid 1px #2c2c2c83;
+    border-radius: 5px;
+
 }
 
-li 
 
 
 /*--------------------------- single page email -------------------------*/
