@@ -154,7 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(message =>{
         console.log(message);
         document.querySelector('#message').innerHTML = message.message
-        setTimeout(load_mailbox,2000,'sent')
+        document.querySelector('#message').style.color= 'green'
+        setTimeout(load_mailbox,1000,'sent')
+        setTimeout(load_mailbox,1000,'sent')
       })
       return false;
     }
@@ -221,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if(typeof sent.message != 'undefined'){
             document.querySelector('#message').innerHTML = sent.message
             document.querySelector('#message').style.color= 'green'
-            setTimeout(load_mailbox,2000,'sent')
+            setTimeout(load_mailbox,1000,'sent')
           }if(typeof sent.error != 'undefined'){
             document.querySelector('#message').innerHTML = sent.error
             document.querySelector('#message').style.color= 'red'
