@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+  load_mailbox('inbox')
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
@@ -115,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#compose-view').style.display = 'block';
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#email-page').style.display = 'none';
+    document.querySelector('#message').innerHTML = ''
     document.querySelector('#title_compose').innerHTML = 'Replay'
     document.querySelector('#compose-recipients').value = `${detail.sender}`
 
@@ -151,8 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(response => response.json())
       .then(message =>{
         console.log(message);
-        document.querySelector('#error_message').innerHTML = ''
-        document.querySelector('#success_message').innerHTML = message.message
+        document.querySelector('#message').innerHTML = message.message
         setTimeout(load_mailbox,2000,'sent')
       })
       return false;
@@ -193,8 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // send email
   function compose_email() {
-    document.querySelector('#success_message').innerHTML = ''
-    document.querySelector('#error_message').innerHTML = ''
+    document.querySelector('#title_compose').innerHTML = 'New Email'
+    document.querySelector('#message').innerHTML = ''
+    document.querySelector('#message').innerHTML= ''
     document.querySelector('#compose-recipients').removeAttribute('disabled')
     document.querySelector('#compose-subject').removeAttribute('disabled')
     document.querySelector('#compose-recipients').value = ''
@@ -214,14 +216,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(sent =>{
           console.log(sent);
           if(typeof sent.message != 'undefined'){
-            document.querySelector('#error_message').innerHTML = ''
-            document.querySelector('#success_message').innerHTML = sent.message
-            document.querySelector('#success_message').style.border= 'solid 1px green'
-            document.querySelector('#success_message').style.padding= '5px 15px 5px 15px'
+            document.querySelector('#message').innerHTML = sent.message
+            document.querySelector('#message').style.color= 'green'
             setTimeout(load_mailbox,2000,'sent')
           }if(typeof sent.error != 'undefined'){
-            document.querySelector('#success_message').innerHTML = ''
-            document.querySelector('#error_message').innerHTML = sent.error
+            document.querySelector('#message').innerHTML = sent.error
+            document.querySelector('#message').style.color= 'red'
           } 
         })
 

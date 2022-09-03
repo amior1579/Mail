@@ -8,11 +8,13 @@ textarea {
     min-height: 200px;
 }
 
-#success_message{
-    background-color: rgb(58, 173, 58);
-    width: fit-content;
-    border-radius: 5px
+/* #success_message{
+    color:  green;
 }
+
+#error_message{
+    color: red;
+} */
 
 /*--------------------------- emailbox -------------------------*/
 
