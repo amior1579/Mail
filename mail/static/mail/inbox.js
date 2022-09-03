@@ -190,6 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         })
       }
+      if(mailbox === 'archive'){
+        setTimeout(load_mailbox,350,'inbox')
+      }
   }
 
 // send email
