@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         // click to show email single page
-        div.addEventListener('click', ()=> view_email(emails.id))
+        div.addEventListener('click', ()=> view_email(emails.id,mailbox))
 
 
 
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // email single page
-  function view_email(emails_id){
+  function view_email(emails_id,mailbox){
     document.querySelector('#compose-view').style.display = 'none';
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#email-page').style.display = 'block';
@@ -102,6 +102,9 @@ document.addEventListener('DOMContentLoaded', function() {
                           <p class='singlepage_timestamp'>${detail.timestamp}</p>
                           <button id='replay_button'>Replay</button>
                         `
+        if(mailbox == 'sent'){
+          document.querySelector('#replay_button').style.display= 'none'
+        }    
         // click to replay email
         document.getElementById('replay_button').addEventListener('click', ()=> replay_email(detail));
         read_email(detail)
